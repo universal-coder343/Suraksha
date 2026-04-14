@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "Suraksha",
+    "slug": "suraksha-app",
+    "version": "1.0.0",
+    "scheme": "suraksha-app",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#1a0a0a"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "updates": {
+      "enabled": false,
+      "checkAutomatically": "NEVER"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#1a0a0a"
+      },
+      "permissions": [
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "VIBRATE",
+        "READ_PHONE_STATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
