@@ -23,31 +23,38 @@ const createSOSAlert = async (req, res) => {
     const contacts = await Contact.find({ userId: req.user._id });
     
     // 2. Find Nearest Police Station
-    // For simplicity, find all and calc haversine in code or just first one
-    // In production: Use $nearSphere geospatial query.
     const stations = await PoliceStation.find();
-    let nearestStation = stations[0]; // simplistic mock picking the first
+    let nearestStation = stations.length > 0 ? stations[0] : null; 
     
     // Save info
     newSOS.nearestPoliceStation = nearestStation 
       ? { name: nearestStation.name, phone: nearestStation.phone, distanceKm: 2.5 } 
-      : {};
+      : { name: 'Emergency Services', phone: '100', distanceKm: 0 };
+    
     newSOS.contactsAlerted = contacts.map(c => ({ name: c.name, phone: c.phone }));
     await newSOS.save();
 
-    // 3. Send SMS and Socket Events
-    await sendSOSAlert(contacts, nearestStation, {
-      sosId: newSOS._id,
-      userName: req.user.name,
-      lat,
-      lng
-    });
+    // 3. Send SMS (Non-blocking so SOS creation succeeds even if Twilio fails)
+    try {
+      await sendSOSAlert(contacts, nearestStation, {
+        sosId: newSOS._id,
+        userName: req.user.name,
+        lat,
+        lng
+      });
+    } catch (smsError) {
+      console.error('SMS sending failed during SOS alert:', smsError.message);
+    }
 
     notifyPolice(getIo(), newSOS);
 
     res.status(201).json(newSOS);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.error('Failed to create SOS alert:', error);
+    res.status(500).json({ 
+      message: 'Failed to create SOS alert. Please try again or call emergency services directly.',
+      error: error.message 
+    });
   }
 };
 

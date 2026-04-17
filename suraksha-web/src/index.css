@@ -1,0 +1,79 @@
+:root {
+  --bg-dark: #0a0e14;
+  --bg-accent: #151c27;
+  --primary: #c0392b; /* Vibrant Red */
+  --primary-glow: rgba(192, 57, 43, 0.4);
+  --secondary: #2ecc71; /* Safe Green */
+  --secondary-glow: rgba(46, 204, 113, 0.3);
+  --warning: #f39c12; /* Caution Yellow */
+  --text-main: #e2e8f0;
+  --text-dim: #94a3b8;
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Outfit', 'Inter', -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.glass-card {
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 var(--primary-glow); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(192, 57, 43, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(192, 57, 43, 0); }
+}
+
+.sos-pulse {
+  animation: pulse 2s infinite;
+}
+
+/* Leaflet Overrides */
+.leaflet-container {
+  background: var(--bg-dark) !important;
+}
+
+.leaflet-bar {
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5) !important;
+}
+
+.leaflet-bar a {
+  background-color: var(--bg-accent) !important;
+  color: var(--text-main) !important;
+  border-bottom: 1px solid var(--glass-border) !important;
+}

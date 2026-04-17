@@ -2,7 +2,7 @@ const Zone = require('../models/Zone');
 
 const getZones = async (req, res) => {
   try {
-    const city = req.query.city || 'Bhopal';
+    const city = req.query.city || 'Jaipur';
     const zones = await Zone.find({ city });
     res.json(zones);
   } catch (error) {

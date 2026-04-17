@@ -3,7 +3,7 @@ const Zone = require('../models/Zone');
 
 const calculateRoute = async (req, res) => {
   try {
-    const { from, to } = req.query;
+    const { from, to, city = 'Jaipur' } = req.query;
     if (!from || !to) {
       return res.status(400).json({ message: 'Missing from/to parameters' });
     }
@@ -11,7 +11,7 @@ const calculateRoute = async (req, res) => {
     const [fromLat, fromLng] = from.split(',').map(Number);
     const [toLat, toLng] = to.split(',').map(Number);
 
-    const zones = await Zone.find({ city: 'Bhopal' }); 
+    const zones = await Zone.find({ city }); 
 
     const route = await getSafeRoute(fromLat, fromLng, toLat, toLng, zones);
     

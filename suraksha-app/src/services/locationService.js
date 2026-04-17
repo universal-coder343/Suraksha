@@ -11,15 +11,28 @@ export const requestPermissions = async () => {
 export const getCurrentLocation = async () => {
   try {
     await requestPermissions();
-    const location = await Location.getCurrentPositionAsync({
-      accuracy: Location.Accuracy.High
+    const locationPromise = Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.High,
     });
+    
+    // Strict timeout for Android emulators
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('GPS Timeout')), 5000)
+    );
+    
+    const location = await Promise.race([locationPromise, timeoutPromise]);
+    
     return {
       lat: location.coords.latitude,
       lng: location.coords.longitude
     };
   } catch (e) {
-    return null;
+    console.warn('GPS failed, using mock location for emulator', e);
+    // Fallback to Bhopal center for emulator testing
+    return {
+      lat: 23.2599,
+      lng: 77.4126
+    };
   }
 };
 

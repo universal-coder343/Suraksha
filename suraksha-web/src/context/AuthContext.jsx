@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login as apiLogin, setAuthToken } from '../services/api';
 
 export const AuthContext = createContext();
@@ -9,17 +8,16 @@ export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in
     const loadUser = async () => {
       try {
-        const storedUser = await AsyncStorage.getItem('user');
-        const token = await AsyncStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
         if (storedUser && token) {
-          setAuthToken(token); // Set token FIRST
-          setUser(JSON.parse(storedUser)); // Mount component second
+          setAuthToken(token);
+          setUser(JSON.parse(storedUser));
         }
       } catch (e) {
-        console.error(e);
+        console.error('Failed to load user', e);
       } finally {
         setIsLoading(false);
       }
@@ -31,19 +29,19 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await apiLogin(phone.trim(), password.trim());
       const userData = res.data;
-      setAuthToken(userData.token); // Set token FIRST
-      setUser(userData); // Allow React to mount secondary screens
-      await AsyncStorage.setItem('user', JSON.stringify(userData));
-      await AsyncStorage.setItem('token', userData.token);
+      setAuthToken(userData.token);
+      setUser(userData);
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('token', userData.token);
     } catch (error) {
       throw error;
     }
   };
 
-  const logout = async () => {
+  const logout = () => {
     setUser(null);
-    await AsyncStorage.removeItem('user');
-    await AsyncStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
     setAuthToken(null);
   };
 

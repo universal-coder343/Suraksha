@@ -6,92 +6,162 @@ const PoliceStation = require('./models/PoliceStation');
 
 dotenv.config();
 
-const bhopalZones = [
+const jaipurZones = [
+  // RED ZONES
   {
-    city: 'Bhopal',
-    name: 'Govindpura Industrial Area',
+    city: 'Jaipur',
+    name: 'Mansarovar',
     risk: 'red',
     weight: 10,
     polygon: [
-      [23.2500, 77.4400],
-      [23.2600, 77.4400],
-      [23.2600, 77.4500],
-      [23.2500, 77.4500]
+      [26.8621, 75.7551],
+      [26.8421, 75.7551],
+      [26.8421, 75.7751],
+      [26.8621, 75.7751]
     ]
   },
   {
-    city: 'Bhopal',
-    name: 'Habibganj',
+    city: 'Jaipur',
+    name: 'Sanganer',
+    risk: 'red',
+    weight: 10,
+    polygon: [
+      [26.8120, 75.7900],
+      [26.7920, 75.7900],
+      [26.7920, 75.8100],
+      [26.8120, 75.8100]
+    ]
+  },
+  {
+    city: 'Jaipur',
+    name: 'Jagatpura',
+    risk: 'red',
+    weight: 10,
+    polygon: [
+      [26.8288, 75.8543],
+      [26.8088, 75.8543],
+      [26.8088, 75.8743],
+      [26.8288, 75.8743]
+    ]
+  },
+  {
+    city: 'Jaipur',
+    name: 'Vaishali Nagar',
+    risk: 'red',
+    weight: 10,
+    polygon: [
+      [26.9179, 75.7269],
+      [26.8979, 75.7269],
+      [26.8979, 75.7469],
+      [26.9179, 75.7469]
+    ]
+  },
+  {
+    city: 'Jaipur',
+    name: 'Jhotwara',
+    risk: 'red',
+    weight: 10,
+    polygon: [
+      [26.9527, 75.7246],
+      [26.9327, 75.7246],
+      [26.9327, 75.7446],
+      [26.9527, 75.7446]
+    ]
+  },
+  {
+    city: 'Jaipur',
+    name: 'Walled City (Johari Bazaar)',
+    risk: 'red',
+    weight: 10,
+    polygon: [
+      [26.9300, 75.8100],
+      [26.9100, 75.8100],
+      [26.9100, 75.8300],
+      [26.9300, 75.8300]
+    ]
+  },
+  // YELLOW ZONES
+  {
+    city: 'Jaipur',
+    name: 'Malviya Nagar',
     risk: 'yellow',
     weight: 3,
     polygon: [
-      [23.2300, 77.4300],
-      [23.2400, 77.4300],
-      [23.2400, 77.4400],
-      [23.2300, 77.4400]
+      [26.8649, 75.8143],
+      [26.8449, 75.8143],
+      [26.8449, 75.8343],
+      [26.8649, 75.8343]
     ]
   },
   {
-    city: 'Bhopal',
-    name: 'TT Nagar',
-    risk: 'green',
-    weight: 0,
+    city: 'Jaipur',
+    name: 'Tonk Road',
+    risk: 'yellow',
+    weight: 3,
     polygon: [
-      [23.2350, 77.3950],
-      [23.2450, 77.3950],
-      [23.2450, 77.4050],
-      [23.2350, 77.4050]
+      [26.8500, 75.7800],
+      [26.8300, 75.7800],
+      [26.8300, 75.8000],
+      [26.8500, 75.8000]
     ]
   },
   {
-    city: 'Bhopal',
-    name: 'MP Nagar',
+    city: 'Jaipur',
+    name: 'Raja Park',
+    risk: 'yellow',
+    weight: 3,
+    polygon: [
+      [26.9050, 75.8150],
+      [26.8850, 75.8150],
+      [26.8850, 75.8350],
+      [26.9050, 75.8350]
+    ]
+  },
+  // GREEN ZONES
+  {
+    city: 'Jaipur',
+    name: 'Civil Lines',
     risk: 'green',
     weight: 0,
     polygon: [
-      [23.2300, 77.4200],
-      [23.2400, 77.4200],
-      [23.2400, 77.4300],
-      [23.2300, 77.4300]
+      [26.9145, 75.7800],
+      [26.8945, 75.7800],
+      [26.8945, 75.8000],
+      [26.9145, 75.8000]
+    ]
+  },
+  {
+    city: 'Jaipur',
+    name: 'C-Scheme',
+    risk: 'green',
+    weight: 0,
+    polygon: [
+      [26.9200, 75.7900],
+      [26.9000, 75.7900],
+      [26.9000, 75.8100],
+      [26.9200, 75.8100]
     ]
   }
 ];
 
 const policeStations = [
   {
-    name: 'TT Nagar Police Station',
-    phone: '0755-2555555',
-    city: 'Bhopal',
-    location: { lat: 23.2389, lng: 77.4025 },
-    jurisdiction: []
+    name: 'Mansarovar Police Station',
+    phone: '0141-2555555',
+    city: 'Jaipur',
+    location: { lat: 26.8521, lng: 75.7651 }
   },
   {
-    name: 'Habibganj Police Station',
-    phone: '0755-2555556',
-    city: 'Bhopal',
-    location: { lat: 23.2350, lng: 77.4360 },
-    jurisdiction: []
+    name: 'Vaishali Nagar Police Station',
+    phone: '0141-2555556',
+    city: 'Jaipur',
+    location: { lat: 26.9079, lng: 75.7369 }
   },
   {
-    name: 'Govindpura Police Station',
-    phone: '0755-2555557',
-    city: 'Bhopal',
-    location: { lat: 23.2550, lng: 77.4450 },
-    jurisdiction: []
-  },
-  {
-    name: 'MP Nagar Police Station',
-    phone: '0755-2555558',
-    city: 'Bhopal',
-    location: { lat: 23.2330, lng: 77.4250 },
-    jurisdiction: []
-  },
-  {
-    name: 'Bhopal Central Police',
-    phone: '0755-2555559',
-    city: 'Bhopal',
-    location: { lat: 23.2599, lng: 77.4126 },
-    jurisdiction: []
+    name: 'Jaipur City Police HQ',
+    phone: '0141-2555557',
+    city: 'Jaipur',
+    location: { lat: 26.9200, lng: 75.8200 }
   }
 ];
 
@@ -99,44 +169,40 @@ const seedDB = async () => {
   try {
     const connStr = process.env.MONGODB_URI || 'mongodb://localhost:27017/suraksha';
     await mongoose.connect(connStr);
-    console.log('MongoDB connected for seeding.');
+    console.log('MongoDB connected for Jaipur seeding.');
 
     await Zone.deleteMany();
-    await Zone.insertMany(bhopalZones);
-    console.log('Zones seeded.');
+    await Zone.insertMany(jaipurZones);
+    console.log('Jaipur Zones seeded.');
 
     await PoliceStation.deleteMany();
     await PoliceStation.insertMany(policeStations);
-    console.log('Police stations seeded.');
+    console.log('Jaipur Police stations seeded.');
 
     await User.deleteMany();
     
     await User.create({
-      name: 'Test Setup User',
-      phone: '9000000000',
-      password: 'test1234', // hashed by pre-save
+      name: 'Jaipur Test User',
+      phone: '9876543210',
+      password: 'user1234',
       role: 'user',
-      city: 'Bhopal'
+      city: 'Jaipur'
     });
 
     await User.create({
-      name: 'Police HQ Dispatch',
-      phone: '9000000001',
-      password: 'police1234', // hashed by pre-save
+      name: 'Jaipur Police Dispatch',
+      phone: '9876543211',
+      password: 'police1234',
       role: 'police',
-      city: 'Bhopal'
+      city: 'Jaipur'
     });
     
-    console.log('Test users seeded.');
+    console.log('Jaipur Test users seeded.');
     process.exit(0);
   } catch (error) {
-    console.error('Error seeding DB:', error);
+    console.error('Error seeding Jaipur data:', error);
     process.exit(1);
   }
 };
 
-if (require.main === module) {
-  seedDB();
-}
-
-module.exports = seedDB;
+seedDB();

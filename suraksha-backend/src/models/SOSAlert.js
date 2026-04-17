@@ -15,7 +15,7 @@ const sosAlertSchema = new mongoose.Schema({
   },
   triggerMethod: {
     type: String,
-    enum: ['shake', 'power_button', 'manual', 'auto_checkin']
+    enum: ['shake', 'power_button', 'manual', 'auto_checkin', 'double_tap']
   },
   location: {
     lat: { type: Number, required: true },
@@ -45,4 +45,4 @@ const sosAlertSchema = new mongoose.Schema({
   cancelledAt: Date
 }, { timestamps: true });
 
-module.exports = mongoose.model('SOSAlert', sosAlertSchema);
+module.exports = mongoose.models.SOSAlert || mongoose.model('SOSAlert', sosAlertSchema);

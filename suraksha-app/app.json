@@ -32,7 +32,12 @@
         "ACCESS_FINE_LOCATION",
         "VIBRATE",
         "READ_PHONE_STATE"
-      ]
+      ],
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA2s0RLs4TUvt-ZhyRMrzB3GNtse5qCgxI"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"

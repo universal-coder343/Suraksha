@@ -1,16 +1,23 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Animated, Easing } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useSOS } from '../hooks/useSOS';
 
 export default function SOSScreen({ navigation }) {
   const { activeSOS, loading, activate, cancel } = useSOS();
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
-  useEffect(() => {
-    // Trigger SOS immediately on mount if not active
-    if (!activeSOS && !loading) {
-      activate('manual');
-    }
+  useFocusEffect(
+    useCallback(() => {
+      // Trigger SOS when screen comes into focus
+      if (!activeSOS && !loading) {
+        activate('manual');
+      }
+    }, [activeSOS, loading, activate])
+  );
+
+  useFocusEffect(
+    useCallback(() => {
 
     // Start pulsing animation
     Animated.loop(
@@ -29,11 +36,13 @@ export default function SOSScreen({ navigation }) {
         })
       ])
     ).start();
-  }, []);
+      return () => pulseAnim.stopAnimation();
+    }, [pulseAnim])
+  );
 
   const handleCancel = async () => {
     await cancel();
-    navigation.goBack();
+    navigation.navigate('Map');
   };
 
   return (
@@ -47,7 +56,7 @@ export default function SOSScreen({ navigation }) {
 
       <View style={styles.statusBox}>
         <Text style={styles.statusText}>
-          {loading ? 'Triggering Alert...' : 'Alert sent · Sharing live location'}
+          {loading ? 'Triggering Alert...' : (activeSOS ? 'Alert sent · Sharing live location' : 'Ready to trigger')}
         </Text>
       </View>
 

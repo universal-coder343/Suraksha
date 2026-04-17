@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Alert, Animated } from 'react-native';
-import MapView, { Marker, Polygon, Polyline, PROVIDER_DEFAULT } from 'react-native-maps';
+import MapView, { Marker, Polygon, Polyline, PROVIDER_DEFAULT, UrlTile } from 'react-native-maps';
 import { Navigation, AlertCircle } from 'lucide-react-native';
 
 import { bhopalZones } from '../data/bhopalZones';
@@ -53,9 +53,17 @@ export default function MapScreen({ navigation }) {
   const handleSearch = async () => {
     if (!destination || !location) return;
     try {
-      // Simplistic mock geocoding via manual dest coords for demo
-      // In real life, use Google Places API
-      const destCoords = { lat: 23.2300, lng: 77.4200 }; // Fake dest (MP Nagar)
+      // Use OpenStreetMap Nominatim for free geocoding! (Bypasses Google API)
+      const geoRes = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(destination + ' Bhopal')}&format=json&limit=1`);
+      const geoData = await geoRes.json();
+      
+      if (!geoData || geoData.length === 0) {
+        Alert.alert('Not Found', 'Could not find this destination.');
+        return;
+      }
+      
+      const destCoords = { lat: parseFloat(geoData[0].lat), lng: parseFloat(geoData[0].lon) };
+      
       const data = await fetchSafeRoute(location, destCoords);
       setRouteData(data);
 
@@ -76,7 +84,6 @@ export default function MapScreen({ navigation }) {
         ref={mapRef}
         style={styles.map}
         provider={PROVIDER_DEFAULT}
-        customMapStyle={mapStyle}
         showsUserLocation={true}
         initialRegion={{
           latitude: 23.2599,
@@ -85,6 +92,11 @@ export default function MapScreen({ navigation }) {
           longitudeDelta: 0.05,
         }}
       >
+        <UrlTile
+          urlTemplate="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          maximumZ={19}
+          flipY={false}
+        />
         {bhopalZones.map(zone => (
           <Polygon
             key={zone.id}
