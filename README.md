@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Suraksha_1.0
 =======
 # Suraksha - Women's Safety App
@@ -20,13 +20,11 @@ Welcome to Suraksha! This project is a complete full-stack women's safety applic
 1. Navigate to the folder: `cd suraksha-backend`
 2. Run `npm install`
 3. Make sure MongoDB is running locally.
-4. Rename `.env.example` to `.env` and fill the keys.
-   - For demo, you can leave Twilio/Google keys empty. It will log to console instead of failing.
-5. Seed the database with initial users and zones:
+4. Seed the database with initial users and zones:
    ```bash
    npm run seed
    ```
-6. Start the server:
+5. Start the server:
    ```bash
    npm start
    ```
@@ -98,16 +96,4 @@ Welcome to Suraksha! This project is a complete full-stack women's safety applic
 | `sos_resolved` | Backend | Dashboard | Alert was resolved, remove from map |
 | `sos_cancelled` | Backend | Dashboard | User marked safe, remove from map |
 
-## Hackathon Demo Script
 
-1. **Start Backend & DB**: Show the `npm start` succeeding.
-2. **Open Dashboard**: Log in as a police operator. Keep the map open on half the screen.
-3. **Open Mobile App**: Log in as User on the other half of the screen.
-4. **Setup**: Go to User App -> Contacts. Add a contact (e.g., Mom).
-5. **Safe Routing**: Go to User Map. Type anything in search. Show the blue polyline drawn around red zones securely taking you through Green zones.
-6. **Trigger SOS**: Click the giant red SOS floating button (or shake device on Expo Go physically).
-7. **Observe Dashboard**: Immediately see the left panel update with a red alert, and the map automatically slide-over and plot a pulsing Red Marker.
-8. **Live Track**: Click "Track" on the Dashboard alert. As the emulator changes location coords, see the pin move on the police dashboard.
-9. **Resolve**: On the mobile app, click "Cancel SOS". Observe the Dashboard auto-dismiss the alert and disappear from the map.
-10. **Conclusion**: Show the Stats Bar on the dashboard updating the counts.
->>>>>>> 94b3b365 (Initial commit)
